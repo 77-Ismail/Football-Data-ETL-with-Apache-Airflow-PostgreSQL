@@ -3,6 +3,9 @@
 ## **Overview**
 This project automates the **ETL (Extract, Transform, Load) process** for historical football data using **Apache Airflow** and stores the cleaned data in a **PostgreSQL** database. The transformed data is structured for further analysis and visualization.
 
+  <h3>Data Pipeline Architecture</h3>
+  <img src="diagram.png" width="1200" alt="accessibility text">
+
 ## **Tech Stack**
 - **Apache Airflow** – Orchestrates the ETL pipeline.
 - **PostgreSQL** – Stores the cleaned and processed data.
