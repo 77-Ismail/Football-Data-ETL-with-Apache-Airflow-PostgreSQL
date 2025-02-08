@@ -1,0 +1,43 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:latest
+    container_name: football-db
+    restart: always
+    environment:
+      POSTGRES_DB: football
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  etl:
+    build: .
+    container_name: etl-container
+    depends_on:
+      - postgres
+
+  airflow:
+    image: apache/airflow:latest
+    container_name: airflow
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./dags:/opt/airflow/dags
+      - ./logs:/opt/airflow/logs
+      - ./plugins:/opt/airflow/plugins
+    environment:
+      - AIRFLOW__CORE__EXECUTOR=SequentialExecutor
+      - AIRFLOW__CORE__LOAD_EXAMPLES=False
+      - AIRFLOW__CORE__DAGS_ARE_PAUSED_AT_CREATION=True
+      - AIRFLOW__WEBSERVER__RBAC=True
+      - AIRFLOW__WEBSERVER__DEFAULT_USER_ROLE=Admin
+      - _AIRFLOW_WWW_USER_USERNAME=admin  # Default username
+      - _AIRFLOW_WWW_USER_PASSWORD=admin  # Default password
+    command: ["airflow", "standalone"]
+
+volumes:
+  pgdata:
