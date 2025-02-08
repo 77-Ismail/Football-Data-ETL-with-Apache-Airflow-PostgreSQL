@@ -36,7 +36,7 @@ This project automates the **ETL (Extract, Transform, Load) process** for histor
 
 1. **Clone the Repository**
    ```bash
-   git clone [repository-link]
+   git clone https://github.com/77-Ismail/Football-Data-ETL-with-Apache-Airflow-PostgreSQL
    cd project-directory
    ```
 2. **Run Docker Containers**
